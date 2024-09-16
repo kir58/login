@@ -4,7 +4,8 @@ import { ErrorType, ValidationSchemaType } from './types.ts';
 const isPasswordContainEmail = (password: string, email: string) => {
   const numConsecutiveChars = 4;
 
-  var invalidCombinations = [];
+  const invalidCombinations = [];
+
   for (let i = 0; i < email.length - numConsecutiveChars; i += 1) {
     const curCombination = email[i] + email[i + 1];
     invalidCombinations.push(curCombination);
