@@ -1,13 +1,22 @@
 import { CardMedia, Tab, Tabs, Stack } from '@mui/material';
 import { Link, Route, Routes } from 'react-router-dom';
 import { SignIn } from '../pages/signIn';
+import { Login } from '../pages/login';
 import Box from '@mui/material/Box';
 import logo from '../shared/assets/mindMoney.svg';
 import demo from '../shared/assets/mindMoneyDemo.png';
 import Typography from '@mui/material/Typography';
 import { Link as CustomLink } from '../shared/ui';
+import { useState } from 'react';
+
+enum TabsEnum {
+  signIn = 0,
+  login = 1,
+}
 
 export const Routing = () => {
+  const [activeTab, setActiveTab] = useState<TabsEnum>(TabsEnum.signIn);
+
   return (
     <Box
       display="grid"
@@ -19,9 +28,10 @@ export const Routing = () => {
         sm: 'inherit',
         xs: 'inherit',
       })}
+      height="100dvh"
     >
-      <Box display="flex" justifyContent="center">
-        <div>
+      <Box display="flex" justifyContent="center" height="100%">
+        <Stack>
           <Box marginY="24px" marginX="106px">
             <img src={logo} alt="logo" />
           </Box>
@@ -39,17 +49,23 @@ export const Routing = () => {
             })}
             width={{ lg: '561px', md: '480px', xl: '516px', sm: '480px', xs: '360px' }}
           >
-            <Tabs TabIndicatorProps={{ style: { display: 'none' } }} variant="fullWidth" value={0}>
-              <Tab label="Sign In" component={Link} to="/" />
-              <Tab disabled label="Login" component={Link} to="/login" />
+            <Tabs
+              component="div"
+              TabIndicatorProps={{ style: { display: 'none' } }}
+              variant="fullWidth"
+              value={activeTab}
+              onChange={(_, value) => setActiveTab(value)}
+            >
+              <Tab label="Sign In" value={TabsEnum.signIn} component={Link} to="/" />
+              <Tab label="Login" value={TabsEnum.login} component={Link} to="/login" />
             </Tabs>
             <Routes>
               <Route path="/" element={<SignIn />} />
-              <Route path="/login" element={<></>} />
+              <Route path="/login" element={<Login />} />
             </Routes>
           </Box>
-
           <Stack
+            marginTop="auto"
             marginBottom="12px"
             direction="row"
             display={{ xs: 'none', sm: 'flex', md: 'flex', lg: 'flex', xl: 'flex' }}
@@ -69,7 +85,7 @@ export const Routing = () => {
               Have some issue? Wrote us <CustomLink href="">info@mind-money.eu</CustomLink>
             </Typography>
           </Stack>
-        </div>
+        </Stack>
       </Box>
       <Box
         display={{ lg: 'grid', xl: 'grid', md: 'none', sm: 'none', xs: 'none' }}

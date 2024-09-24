@@ -19,7 +19,7 @@ export const SignIn = () => {
     criteriaMode: 'firstError',
     shouldFocusError: true,
     shouldUnregister: true,
-    defaultValues: defaultValues,
+    defaultValues,
   });
 
   const {
